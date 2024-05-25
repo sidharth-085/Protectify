@@ -5,8 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E8E8E8"
-    tools:context=".GuardScreen">
+    android:background="#E8E8E8">
 
     <TextView
         android:id="@+id/security_text"
@@ -123,20 +122,5 @@
         app:layout_constraintBottom_toBottomOf="@id/guardCardView"
         app:layout_constraintEnd_toEndOf="@id/guardCardView"
         app:layout_constraintTop_toTopOf="@id/guardCardView" />
-
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_navigation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        app:itemActiveIndicatorStyle="@style/App.Custom.Indicator"
-        app:itemIconSize="30dp"
-        app:itemIconTint="@drawable/nav_item_colors"
-        app:itemTextColor="@color/green"
-        app:labelVisibilityMode="labeled"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/bottom_bar_items" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
