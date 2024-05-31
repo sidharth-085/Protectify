@@ -25,8 +25,30 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val listOfCardItems = listOf(
-            CardItemModel(name = "Sidharth"),
-            CardItemModel(name = "Ketan")
+            CardItemModel(
+                name = "Sidharth",
+                battery = "80%",
+                address = "9th buildind, 2nd floor, maldiv road, manali 9th buildind, 2nd floor 9th buildind, 2nd floor",
+                distance = "100m"
+            ),
+            CardItemModel(
+                name = "Sidharth",
+                battery = "80%",
+                address = "9th buildind, 2nd floor, maldiv road, manali 9th buildind, 2nd floor 9th buildind, 2nd floor",
+                distance = "100m"
+            ),
+            CardItemModel(
+                name = "Sidharth",
+                battery = "80%",
+                address = "9th buildind, 2nd floor, maldiv road, manali 9th buildind, 2nd floor 9th buildind, 2nd floor",
+                distance = "100m"
+            ),
+            CardItemModel(
+                name = "Sidharth",
+                battery = "80%",
+                address = "9th buildind, 2nd floor, maldiv road, manali 9th buildind, 2nd floor 9th buildind, 2nd floor",
+                distance = "100m"
+            )
         )
 
         val adapter = CardItemAdapter(listOfCardItems)

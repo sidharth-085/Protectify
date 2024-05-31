@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 R.id.nav_dashboard -> {
-                    inflateFragment(DashboardFragment.newInstance())
+                    inflateFragment(MapsFragment())
                 }
 
                 R.id.nav_profile -> {
@@ -36,14 +36,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         bottomNavigationBar.selectedItemId = R.id.nav_home
-    }
-
-    private fun inflateProfileFragment() {
-
-    }
-
-    private fun inflateDashboardFragment() {
-
     }
 
     private fun inflateFragment(fragment: Fragment) {

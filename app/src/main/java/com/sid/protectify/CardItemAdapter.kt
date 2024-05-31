@@ -16,10 +16,13 @@ class CardItemAdapter(private val listOfCardItems: List<CardItemModel>) : Recycl
         return ViewHolder(item)
     }
 
-    override fun onBindViewHolder(holder: CardItemAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = listOfCardItems[position]
 
         holder.userName.text = item.name
+        holder.userBattery.text = item.battery
+        holder.userDistance.text = item.distance
+        holder.userAddress.text = item.address
     }
 
     override fun getItemCount(): Int {
@@ -29,5 +32,8 @@ class CardItemAdapter(private val listOfCardItems: List<CardItemModel>) : Recycl
     class ViewHolder(private val itemView: View): RecyclerView.ViewHolder(itemView) {
         val userImage = itemView.findViewById<ImageView>(R.id.user_image)
         val userName = itemView.findViewById<TextView>(R.id.user_name)
+        val userBattery = itemView.findViewById<TextView>(R.id.user_battery)
+        val userDistance = itemView.findViewById<TextView>(R.id.user_distance)
+        val userAddress = itemView.findViewById<TextView>(R.id.user_address)
     }
 }
