@@ -11,9 +11,11 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class HomeFragment : Fragment() {
+
+    private lateinit var inviteAdapter: InviteAdapter
+    private lateinit var cardAdapter: CardAdapter
 
     private val listOfContacts: ArrayList<ContactItemModel> = ArrayList()
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,27 +59,32 @@ class HomeFragment : Fragment() {
             )
         )
 
-        val cardAdapter = CardItemAdapter(listOfCardItems)
+        cardAdapter = CardAdapter(listOfCardItems)
 
         val cardRecyclerView = requireView().findViewById<RecyclerView>(R.id.card_recycler_view)
         cardRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         cardRecyclerView.adapter = cardAdapter
 
-        val inviteAdapter = InviteAdapter(listOfContacts)
+        inviteAdapter = InviteAdapter(listOfContacts)
+        fetchDatabaseContacts()
 
         CoroutineScope(Dispatchers.IO).launch {
-            listOfContacts.addAll(fetchContacts())
-
-            insertDatabaseContacts(listOfContacts)
-
-            withContext(Dispatchers.Main) {
-                inviteAdapter.notifyDataSetChanged()
-            }
+            insertDatabaseContacts(fetchContacts())
         }
 
         val contactRecyclerView = requireView().findViewById<RecyclerView>(R.id.invite_recycler_view)
         contactRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         contactRecyclerView.adapter = inviteAdapter
+    }
+
+    private fun fetchDatabaseContacts() {
+        val database = ContactDatabase.getDatabase(requireContext())
+        database.contactDao().getAllContacts().observe(viewLifecycleOwner) {
+            listOfContacts.clear()
+            listOfContacts.addAll(it)
+
+            inviteAdapter.notifyDataSetChanged()
+        }
     }
 
     private suspend fun insertDatabaseContacts(listOfContacts: ArrayList<ContactItemModel>) {

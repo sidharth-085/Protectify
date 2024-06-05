@@ -7,7 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class CardItemAdapter(private val listOfCardItems: List<CardItemModel>) : RecyclerView.Adapter<CardItemAdapter.ViewHolder>() {
+class CardAdapter(private val listOfCardItems: List<CardItemModel>) : RecyclerView.Adapter<CardAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
