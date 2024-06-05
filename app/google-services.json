@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "694430842342",
+    "project_id": "protectify-e0619",
+    "storage_bucket": "protectify-e0619.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:694430842342:android:f68ae27ea77f86365f6a27",
+        "android_client_info": {
+          "package_name": "com.sid.protectify"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "694430842342-1njksvfrk0qfajnit7lj15j9cl3vo46b.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sid.protectify",
+            "certificate_hash": "253dfacc6793f262ed774ef742815176f1bf3a77"
+          }
+        },
+        {
+          "client_id": "694430842342-pvhmsf07635luj2a2mj2qdhso691r17a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAaFPk95hqdkhUFpZic_u7nFxb8NtlYpPU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "694430842342-esac484k54e3gc8a48sj6k7pm2lmvpi2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

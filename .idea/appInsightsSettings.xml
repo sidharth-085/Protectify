@@ -22,10 +22,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="com.sid.protectify" />
+                  <option name="mobileSdkAppId" value="1:694430842342:android:f68ae27ea77f86365f6a27" />
+                  <option name="projectId" value="protectify-e0619" />
+                  <option name="projectNumber" value="694430842342" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />
