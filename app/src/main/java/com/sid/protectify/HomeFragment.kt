@@ -8,9 +8,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.Recycler
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class HomeFragment : Fragment() {
+
+    private val listOfContacts: ArrayList<ContactItemModel> = ArrayList()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -52,18 +57,32 @@ class HomeFragment : Fragment() {
             )
         )
 
-        val adapter = CardItemAdapter(listOfCardItems)
+        val cardAdapter = CardItemAdapter(listOfCardItems)
 
         val cardRecyclerView = requireView().findViewById<RecyclerView>(R.id.card_recycler_view)
         cardRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-        cardRecyclerView.adapter = adapter
-
-        val listOfContacts = fetchContacts()
+        cardRecyclerView.adapter = cardAdapter
 
         val inviteAdapter = InviteAdapter(listOfContacts)
+
+        CoroutineScope(Dispatchers.IO).launch {
+            listOfContacts.addAll(fetchContacts())
+
+            insertDatabaseContacts(listOfContacts)
+
+            withContext(Dispatchers.Main) {
+                inviteAdapter.notifyDataSetChanged()
+            }
+        }
+
         val contactRecyclerView = requireView().findViewById<RecyclerView>(R.id.invite_recycler_view)
         contactRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         contactRecyclerView.adapter = inviteAdapter
+    }
+
+    private suspend fun insertDatabaseContacts(listOfContacts: ArrayList<ContactItemModel>) {
+        val database = ContactDatabase.getDatabase(requireContext())
+        database.contactDao().insertAllContacts(listOfContacts)
     }
 
     private fun fetchContacts(): ArrayList<ContactItemModel> {

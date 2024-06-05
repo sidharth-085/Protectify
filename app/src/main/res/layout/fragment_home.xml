@@ -64,7 +64,7 @@
             android:id="@+id/invite_recycler_view"
             android:layout_width="wrap_content"
             android:layout_height="150dp"
-            android:layout_marginTop="8dp"
+            android:layout_margin="8dp"
             tools:listitem="@layout/invite_item"/>
 
     </com.google.android.material.card.MaterialCardView>
