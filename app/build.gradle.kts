@@ -10,6 +10,10 @@ android {
     namespace = "com.sid.protectify"
     compileSdk = 34
 
+    buildFeatures {
+        viewBinding = true
+    }
+
     defaultConfig {
         applicationId = "com.sid.protectify"
         minSdk = 24

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".HomeFragment"
-    android:background="@color/gray">
+    android:background="@color/gray"
+    tools:context=".HomeFragment">
 
     <TextView
         android:id="@+id/title"
@@ -14,50 +14,58 @@
         android:layout_marginTop="40dp"
         android:fontFamily="@font/product_sans_bold"
         android:text="Protectify"
-        android:textSize="22sp"
         android:textColor="@color/black"
+        android:textSize="22sp"
         app:layout_constraintEnd_toStartOf="@id/three_dots_image"
         app:layout_constraintStart_toEndOf="@id/location_image"
         app:layout_constraintTop_toTopOf="parent" />
-    
-    <ImageView
-        android:id="@+id/location_image"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:src="@drawable/ic_location"
-        android:layout_marginTop="40dp"
-        android:layout_marginStart="20dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
 
     <ImageView
+        android:id="@+id/location_image"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="30dp"
+        android:adjustViewBounds="true"
+        android:background="@null"
+        android:contentDescription="Location Icon"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_location"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
         android:id="@+id/three_dots_image"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginTop="40dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="30dp"
         android:layout_marginEnd="20dp"
+        android:adjustViewBounds="true"
+        android:background="@null"
+        android:contentDescription="Three Dots Icon"
+        android:scaleType="fitXY"
         android:src="@drawable/ic_three_dots"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
-    
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/card_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
-        app:layout_constraintTop_toBottomOf="@id/title"
         app:layout_constraintBottom_toTopOf="@id/invite_card"
+        app:layout_constraintTop_toBottomOf="@id/title"
         tools:listitem="@layout/card_item" />
-    
+
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/invite_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
+        app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="16dp"
         app:cardElevation="8dp"
-        app:cardBackgroundColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent">
 
         <androidx.recyclerview.widget.RecyclerView
@@ -65,7 +73,7 @@
             android:layout_width="wrap_content"
             android:layout_height="150dp"
             android:layout_margin="8dp"
-            tools:listitem="@layout/invite_item"/>
+            tools:listitem="@layout/invite_item" />
 
     </com.google.android.material.card.MaterialCardView>
 
