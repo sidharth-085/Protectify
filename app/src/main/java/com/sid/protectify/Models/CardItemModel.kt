@@ -1,4 +1,4 @@
-package com.sid.protectify
+package com.sid.protectify.Models
 
 data class CardItemModel(
     val name: String,

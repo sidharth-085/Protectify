@@ -1,4 +1,4 @@
-package com.sid.protectify
+package com.sid.protectify.Models
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

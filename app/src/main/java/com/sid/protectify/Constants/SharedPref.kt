@@ -1,4 +1,4 @@
-package com.sid.protectify
+package com.sid.protectify.Constants
 
 import android.content.Context
 import android.content.SharedPreferences

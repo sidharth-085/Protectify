@@ -1,4 +1,4 @@
-package com.sid.protectify
+package com.sid.protectify.Fragments
 
 import android.os.Bundle
 import android.provider.ContactsContract
@@ -8,6 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
+import com.sid.protectify.Adapters.CardAdapter
+import com.sid.protectify.Adapters.InviteAdapter
+import com.sid.protectify.Database.ContactDatabase
+import com.sid.protectify.Models.CardItemModel
+import com.sid.protectify.Models.ContactItemModel
+import com.sid.protectify.Constants.PrefConstants
+import com.sid.protectify.Constants.SharedPref
 import com.sid.protectify.databinding.FragmentHomeBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

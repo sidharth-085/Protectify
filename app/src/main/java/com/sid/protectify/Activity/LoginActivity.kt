@@ -1,7 +1,8 @@
-package com.sid.protectify
+package com.sid.protectify.Activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -12,26 +13,33 @@ import com.google.android.gms.common.api.ApiException
 import com.google.android.material.button.MaterialButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import com.sid.protectify.Constants.PrefConstants
+import com.sid.protectify.R
+import com.sid.protectify.Constants.SharedPref
+import com.sid.protectify.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var signInButton: MaterialButton
+    private lateinit var binding: ActivityLoginBinding
 
     private lateinit var googleSignInClient: GoogleSignInClient
     private val reqCode = 89
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
         enableEdgeToEdge()
 
+        binding = ActivityLoginBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id_auth))
+            .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
             .build()
 
         googleSignInClient = GoogleSignIn.getClient(this, gso)
 
-        signInButton = findViewById(R.id.sign_in_button)
+        signInButton = binding.signInButton
         signInButton.setOnClickListener {
             signInWithGoogle()
         }
@@ -72,6 +80,7 @@ class LoginActivity : AppCompatActivity() {
         firebaseAuth.signInWithCredential(credential)
             .addOnCompleteListener { task ->
             if (task.isSuccessful) {
+                Log.d("HELLO TAG", "signInWithCredential:success")
                 SharedPref.putBoolean(PrefConstants.IS_USER_LOGGED_IN, true)
                 startActivity(Intent(this, MainActivity::class.java))
                 finish()

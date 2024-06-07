@@ -1,4 +1,4 @@
-package com.sid.protectify
+package com.sid.protectify.Adapters
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,6 +6,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.sid.protectify.Models.CardItemModel
+import com.sid.protectify.R
 
 class CardAdapter(private val listOfCardItems: List<CardItemModel>) : RecyclerView.Adapter<CardAdapter.ViewHolder>() {
 

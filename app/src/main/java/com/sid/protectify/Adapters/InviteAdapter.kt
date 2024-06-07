@@ -1,10 +1,12 @@
-package com.sid.protectify
+package com.sid.protectify.Adapters
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.sid.protectify.Models.ContactItemModel
+import com.sid.protectify.R
 
 class InviteAdapter(private val listOfContacts: List<ContactItemModel>): RecyclerView.Adapter<InviteAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
