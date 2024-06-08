@@ -23,9 +23,9 @@
               <option name="connection">
                 <ConnectionSetting>
                   <option name="appId" value="com.sid.protectify" />
-                  <option name="mobileSdkAppId" value="1:694430842342:android:f68ae27ea77f86365f6a27" />
-                  <option name="projectId" value="protectify-e0619" />
-                  <option name="projectNumber" value="694430842342" />
+                  <option name="mobileSdkAppId" value="1:256461249838:android:cdd4c38332242abccf6ebf" />
+                  <option name="projectId" value="protectify-debff" />
+                  <option name="projectNumber" value="256461249838" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

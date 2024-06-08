@@ -2,89 +2,92 @@ package com.sid.protectify.Activity
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
+import android.widget.Button
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
+import com.google.android.gms.auth.api.identity.Identity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.common.api.ApiException
-import com.google.android.material.button.MaterialButton
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.GoogleAuthProvider
-import com.sid.protectify.Constants.PrefConstants
 import com.sid.protectify.R
-import com.sid.protectify.Constants.SharedPref
-import com.sid.protectify.databinding.ActivityLoginBinding
+import com.sid.protectify.ViewModel.SignInViewModel
+import kotlinx.coroutines.launch
 
 class LoginActivity : AppCompatActivity() {
-    private lateinit var signInButton: MaterialButton
-    private lateinit var binding: ActivityLoginBinding
 
-    private lateinit var googleSignInClient: GoogleSignInClient
-    private val reqCode = 89
+    private val signInViewModel: SignInViewModel by viewModels()
+    private lateinit var googleAuthUiClient: GoogleAuthUiClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+        setContentView(R.layout.activity_login)
 
-        binding = ActivityLoginBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        val oneTapClient = Identity.getSignInClient(this)
+        googleAuthUiClient = GoogleAuthUiClient(this, oneTapClient)
 
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id))
-            .requestEmail()
-            .build()
-
-        googleSignInClient = GoogleSignIn.getClient(this, gso)
-
-        signInButton = binding.signInButton
+        val signInButton: Button = findViewById(R.id.sign_in_button)
         signInButton.setOnClickListener {
-            signInWithGoogle()
+            signIn()
+        }
+
+        observeViewModel()
+    }
+
+    private fun signIn() {
+        lifecycleScope.launch {
+            val intentSender = googleAuthUiClient.signIn()
+            intentSender?.let {
+                startIntentSenderForResult(
+                    it,
+                    REQ_ONE_TAP,
+                    null,
+                    0,
+                    0,
+                    0
+                )
+            }
+        }
+    }
+
+    private fun observeViewModel() {
+        lifecycleScope.launchWhenStarted {
+            signInViewModel.state.collect { state ->
+                if (state.isSignInSuccessful) {
+                    Toast.makeText(this@LoginActivity, "Sign in successful!", Toast.LENGTH_SHORT).show()
+
+                    val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }
+                else if (state.signInError != null) {
+                    Toast.makeText(this@LoginActivity, "Sign in failed: ${state.signInError}", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQ_ONE_TAP) {
+            lifecycleScope.launch {
+                data?.let {
+                    val result = googleAuthUiClient.signInWithIntent(it)
+                    signInViewModel.signInResult(result)
+                }
+            }
         }
     }
 
     override fun onStart() {
         super.onStart()
         if (GoogleSignIn.getLastSignedInAccount(this) != null) {
-            startActivity(Intent(this, MainActivity::class.java))
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
             finish()
         }
     }
 
-    private fun signInWithGoogle() {
-        val signInIntent: Intent = googleSignInClient.signInIntent
-        startActivityForResult(signInIntent, reqCode)
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if (requestCode == reqCode) {
-            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
-            try {
-                val account = task.getResult(ApiException::class.java)!!
-                firebaseAuthWithGoogle(account.idToken!!)
-            }
-            catch(e: ApiException) {
-                Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
-
-    private fun firebaseAuthWithGoogle(idToken: String) {
-        val firebaseAuth = FirebaseAuth.getInstance()
-
-        val credential = GoogleAuthProvider.getCredential(idToken, null)
-        firebaseAuth.signInWithCredential(credential)
-            .addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                Log.d("HELLO TAG", "signInWithCredential:success")
-                SharedPref.putBoolean(PrefConstants.IS_USER_LOGGED_IN, true)
-                startActivity(Intent(this, MainActivity::class.java))
-                finish()
-            }
-        }
+    companion object {
+        private const val REQ_ONE_TAP = 2
     }
 }
