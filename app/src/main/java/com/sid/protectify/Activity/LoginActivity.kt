@@ -2,6 +2,7 @@ package com.sid.protectify.Activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -9,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.auth.api.identity.Identity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.material.snackbar.Snackbar
 import com.sid.protectify.R
 import com.sid.protectify.ViewModel.SignInViewModel
 import kotlinx.coroutines.launch
@@ -33,6 +35,14 @@ class LoginActivity : AppCompatActivity() {
         observeViewModel()
     }
 
+    override fun onStart() {
+        super.onStart()
+
+        if (googleAuthUiClient.getSignedInUser() != null) {
+            navigateToMainActivity()
+        }
+    }
+
     private fun signIn() {
         lifecycleScope.launch {
             val intentSender = googleAuthUiClient.signIn()
@@ -53,17 +63,21 @@ class LoginActivity : AppCompatActivity() {
         lifecycleScope.launchWhenStarted {
             signInViewModel.state.collect { state ->
                 if (state.isSignInSuccessful) {
-                    Toast.makeText(this@LoginActivity, "Sign in successful!", Toast.LENGTH_SHORT).show()
+                    showToast("Sign in Successful!")
 
-                    val intent = Intent(this@LoginActivity, MainActivity::class.java)
-                    startActivity(intent)
-                    finish()
+                    navigateToMainActivity()
+                    signInViewModel.resetState()
                 }
                 else if (state.signInError != null) {
-                    Toast.makeText(this@LoginActivity, "Sign in failed: ${state.signInError}", Toast.LENGTH_SHORT).show()
+                    showToast("Sign in Failed!")
                 }
             }
         }
+    }
+
+    private fun navigateToMainActivity() {
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -78,13 +92,8 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    override fun onStart() {
-        super.onStart()
-        if (GoogleSignIn.getLastSignedInAccount(this) != null) {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
     companion object {

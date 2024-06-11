@@ -3,4 +3,6 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="web_client_id">256461249838-28bppvcpav5git1coqqkm2ilsie1rnhg.apps.googleusercontent.com</string>
+    <string name="guard_info">Open when you are in potentially dangerous journey.</string>
+    <string name="sos_info">In case of emergency, keep telling family members to contact me.</string>
 </resources>

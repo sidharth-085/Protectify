@@ -1,5 +1,6 @@
 package com.sid.protectify.Fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.provider.ContactsContract
 import androidx.fragment.app.Fragment
@@ -7,14 +8,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.firebase.auth.FirebaseAuth
 import com.sid.protectify.Adapters.CardAdapter
 import com.sid.protectify.Adapters.InviteAdapter
 import com.sid.protectify.Database.ContactDatabase
 import com.sid.protectify.Models.CardItemModel
 import com.sid.protectify.Models.ContactItemModel
-import com.sid.protectify.Constants.PrefConstants
-import com.sid.protectify.Constants.SharedPref
 import com.sid.protectify.databinding.FragmentHomeBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -25,6 +23,7 @@ class HomeFragment : Fragment() {
     private lateinit var inviteAdapter: InviteAdapter
     private lateinit var cardAdapter: CardAdapter
     lateinit var binding: FragmentHomeBinding
+    lateinit var mContext: Context
 
     private val listOfContacts: ArrayList<ContactItemModel> = ArrayList()
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -72,7 +71,7 @@ class HomeFragment : Fragment() {
         cardAdapter = CardAdapter(listOfCardItems)
 
         val cardRecyclerView = binding.cardRecyclerView
-        cardRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+        cardRecyclerView.layoutManager = LinearLayoutManager(mContext)
         cardRecyclerView.adapter = cardAdapter
 
         inviteAdapter = InviteAdapter(listOfContacts)
@@ -83,29 +82,31 @@ class HomeFragment : Fragment() {
         }
 
         val contactRecyclerView = binding.inviteRecyclerView
-        contactRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        contactRecyclerView.layoutManager = LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false)
         contactRecyclerView.adapter = inviteAdapter
+    }
 
-        val threeDotsButton = binding.threeDotsImage
-        threeDotsButton.setOnClickListener {
-            SharedPref.putBoolean(PrefConstants.IS_USER_LOGGED_IN, false)
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
 
-            FirebaseAuth.getInstance().signOut()
-        }
+        mContext = context
     }
 
     private fun fetchDatabaseContacts() {
-        val database = ContactDatabase.getDatabase(requireContext())
+        val database = ContactDatabase.getDatabase(mContext)
         database.contactDao().getAllContacts().observe(viewLifecycleOwner) {
             listOfContacts.clear()
             listOfContacts.addAll(it)
 
             inviteAdapter.notifyDataSetChanged()
+
+            binding.progressBar.visibility = View.GONE
+            binding.inviteRecyclerView.visibility = View.VISIBLE
         }
     }
 
     private suspend fun insertDatabaseContacts(listOfContacts: ArrayList<ContactItemModel>) {
-        val database = ContactDatabase.getDatabase(requireContext())
+        val database = ContactDatabase.getDatabase(mContext)
         database.contactDao().insertAllContacts(listOfContacts)
     }
 

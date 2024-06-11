@@ -1,24 +1,20 @@
 package com.sid.protectify.Adapters
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.sid.protectify.Models.CardItemModel
-import com.sid.protectify.R
+import com.sid.protectify.databinding.CardItemBinding
 
-class CardAdapter(private val listOfCardItems: List<CardItemModel>) : RecyclerView.Adapter<CardAdapter.ViewHolder>() {
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+class CardAdapter(private val listOfCardItems: List<CardItemModel>) : RecyclerView.Adapter<CardAdapter.CardAdapterViewHolder>() {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardAdapterViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val item = inflater.inflate(R.layout.card_item, parent, false)
+        val item = CardItemBinding.inflate(inflater, parent, false)
 
-        return ViewHolder(item)
+        return CardAdapterViewHolder(item)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: CardAdapterViewHolder, position: Int) {
         val item = listOfCardItems[position]
 
         holder.userName.text = item.name
@@ -31,11 +27,11 @@ class CardAdapter(private val listOfCardItems: List<CardItemModel>) : RecyclerVi
         return listOfCardItems.size
     }
 
-    class ViewHolder(private val itemView: View): RecyclerView.ViewHolder(itemView) {
-        val userImage = itemView.findViewById<ImageView>(R.id.user_image)
-        val userName = itemView.findViewById<TextView>(R.id.user_name)
-        val userBattery = itemView.findViewById<TextView>(R.id.user_battery)
-        val userDistance = itemView.findViewById<TextView>(R.id.user_distance)
-        val userAddress = itemView.findViewById<TextView>(R.id.user_address)
+    class CardAdapterViewHolder(cardItemBinding: CardItemBinding): RecyclerView.ViewHolder(cardItemBinding.root) {
+        val userImage = cardItemBinding.userImage
+        val userName = cardItemBinding.userName
+        val userBattery = cardItemBinding.userBattery
+        val userDistance = cardItemBinding.userDistance
+        val userAddress = cardItemBinding.userAddress
     }
 }

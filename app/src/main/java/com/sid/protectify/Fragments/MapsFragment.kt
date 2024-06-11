@@ -1,6 +1,7 @@
 package com.sid.protectify.Fragments
 
 import android.Manifest
+import android.content.Context
 import android.content.pm.PackageManager
 import androidx.fragment.app.Fragment
 
@@ -18,6 +19,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.sid.protectify.R
 
 class MapsFragment : Fragment() {
+    private lateinit var mContext: Context
 
     private val callback = OnMapReadyCallback { googleMap ->
         /**
@@ -34,10 +36,10 @@ class MapsFragment : Fragment() {
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
 
         if (ActivityCompat.checkSelfPermission(
-                requireContext(),
+                mContext,
                 Manifest.permission.ACCESS_FINE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                requireContext(),
+                mContext,
                 Manifest.permission.ACCESS_COARSE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED
         ) {
@@ -57,5 +59,11 @@ class MapsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(callback)
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        mContext = context
     }
 }

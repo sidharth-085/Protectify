@@ -5,11 +5,14 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.provider.MediaStore
-import androidx.activity.enableEdgeToEdge
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.sid.protectify.Fragments.GuardFragment
 import com.sid.protectify.Fragments.HomeFragment
 import com.sid.protectify.Fragments.MapsFragment
@@ -26,12 +29,10 @@ class MainActivity : AppCompatActivity() {
     )
 
     private val permissionCode = 101
-    lateinit var binding: ActivityMainBinding
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 

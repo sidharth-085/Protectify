@@ -11,7 +11,7 @@
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="20dp"
         android:fontFamily="@font/product_sans_bold"
         android:text="Protectify"
         android:textColor="@color/black"
@@ -22,28 +22,24 @@
 
     <ImageView
         android:id="@+id/location_image"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="30dp"
-        android:adjustViewBounds="true"
+        android:layout_marginTop="20dp"
         android:background="@null"
         android:contentDescription="Location Icon"
-        android:scaleType="fitXY"
         android:src="@drawable/ic_location"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageButton
+    <ImageView
         android:id="@+id/three_dots_image"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="30dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
-        android:adjustViewBounds="true"
         android:background="@null"
         android:contentDescription="Three Dots Icon"
-        android:scaleType="fitXY"
         android:src="@drawable/ic_three_dots"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -53,7 +49,8 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
+        android:paddingStart="4dp"
+        android:paddingEnd="4dp"
         app:layout_constraintBottom_toTopOf="@id/invite_card"
         app:layout_constraintTop_toBottomOf="@id/title"
         tools:listitem="@layout/card_item" />
@@ -62,18 +59,43 @@
         android:id="@+id/invite_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:layout_margin="12dp"
         app:cardBackgroundColor="@color/white"
-        app:cardCornerRadius="16dp"
+        app:cardCornerRadius="20dp"
         app:cardElevation="8dp"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/card_recycler_view">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/invite_recycler_view"
-            android:layout_width="wrap_content"
-            android:layout_height="150dp"
-            android:layout_margin="8dp"
-            tools:listitem="@layout/invite_item" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:visibility="visible"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/invite_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="123dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:listitem="@layout/invite_item" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.card.MaterialCardView>
 

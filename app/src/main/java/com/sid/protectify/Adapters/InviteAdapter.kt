@@ -1,21 +1,19 @@
 package com.sid.protectify.Adapters
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.sid.protectify.Models.ContactItemModel
-import com.sid.protectify.R
+import com.sid.protectify.databinding.InviteItemBinding
 
-class InviteAdapter(private val listOfContacts: List<ContactItemModel>): RecyclerView.Adapter<InviteAdapter.ViewHolder>() {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+class InviteAdapter(private val listOfContacts: List<ContactItemModel>): RecyclerView.Adapter<InviteAdapter.InviteAdapterViewHolder>() {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): InviteAdapterViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val item = inflater.inflate(R.layout.invite_item, parent, false)
-        return ViewHolder(item)
+        val item = InviteItemBinding.inflate(inflater, parent, false)
+        return InviteAdapterViewHolder(item)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: InviteAdapterViewHolder, position: Int) {
         val item = listOfContacts[position]
         holder.contactName.text = item.name
     }
@@ -24,7 +22,7 @@ class InviteAdapter(private val listOfContacts: List<ContactItemModel>): Recycle
         return listOfContacts.size
     }
 
-    class ViewHolder(private val itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val contactName = itemView.findViewById<TextView>(R.id.txt_name)
+    class InviteAdapterViewHolder(inviteItemBinding: InviteItemBinding) : RecyclerView.ViewHolder(inviteItemBinding.root) {
+        val contactName = inviteItemBinding.txtName
     }
 }
